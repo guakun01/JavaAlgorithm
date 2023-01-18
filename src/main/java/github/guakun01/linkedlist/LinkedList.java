@@ -53,6 +53,29 @@ public class LinkedList {
         pre.next = insertNode;
     }
 
+    public void addWithDummyNode(int index, int value) {
+        preCheckIndex(index, length);
+
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+
+        // Search
+        ListNode pre = dummyNode;
+        while (index > 0) {
+            pre = pre.next;
+            index--;
+        }
+        ListNode cur = pre.next;
+
+        // Build new node
+        length += 1;
+        ListNode insertNode = new ListNode(value, cur);
+
+        // Change linked list structure
+        pre.next = insertNode;
+        head = dummyNode.next;
+    }
+
     private void preCheckIndex(int index, int restrition) {
         if (index < 0 || index > restrition) {
             throw new RuntimeException(
@@ -87,6 +110,29 @@ public class LinkedList {
 
         // Change structure
         pre.next = nextNode;
+    }
+
+    public void removeByIndexWithDummyNode(int index) {
+        preCheckIndex(index, length - 1);
+        length -= 1;
+       
+        // Build dummyNode
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+
+        ListNode pre = dummyNode;
+        while(index > 0) {
+            pre = pre.next;
+            index--;
+        }
+
+        // Search
+        ListNode cur = pre.next;
+        ListNode nextNode = cur.next;
+
+        // Change structure
+        pre.next = nextNode;
+        head = dummyNode.next;
     }
 
     public void removeByValue(int value) {
